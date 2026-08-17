@@ -1,25 +1,76 @@
-#root {
+.Layout {
   display: flex;
-  flex-direction: column;
   height: 100vh;
   width: 100vw;
-  max-width: 100%;
-  padding: 0;
-  margin: 0;
   background-color: var(--color-bg);
 }
 
+.Sidebar {
+  width: 240px;
+  background-color: #000;
+  border-right: 1px solid var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.Sidebar h2 {
+  font-family: var(--font-display);
+  color: var(--color-primary);
+  text-align: center;
+  margin-top: 0;
+  text-shadow: 0 0 3px var(--color-primary);
+}
+
+.Sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Sidebar li {
+  padding: 1rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.Sidebar li:hover {
+  background-color: var(--color-surface);
+}
+
+.Sidebar li.active {
+  border-left-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: var(--color-surface);
+}
+
+.SidebarFooter {
+  margin-top: auto;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
 .App {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  border-left: 1px solid var(--color-primary);
-  border-right: 1px solid var(--color-primary);
-  box-shadow: 0 0 20px var(--color-primary);
+  max-width: 100%; /* Changed */
+  border-left: none; /* Changed */
+  border-right: none; /* Changed */
+  box-shadow: none; /* Changed */
+  margin: 0; /* Changed */
 }
+
+.loading-indicator {
+  text-align: center;
+  padding: 1rem;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+}
+
 
 .Header {
   padding: 1rem;
