@@ -1,0 +1,26 @@
+:root {
+  --font-main: 'Roboto Mono', monospace;
+  --font-display: 'Orbitron', sans-serif;
+
+  --color-bg: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-primary: #00f2ff;
+  --color-accent: #ff00ff;
+  --color-text: #e6e6e6;
+  --color-text-muted: #888888;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}

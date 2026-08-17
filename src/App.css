@@ -1,0 +1,121 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-bg);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-left: 1px solid var(--color-primary);
+  border-right: 1px solid var(--color-primary);
+  box-shadow: 0 0 20px var(--color-primary);
+}
+
+.Header {
+  padding: 1rem;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-primary);
+  text-align: center;
+}
+
+.Header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--color-primary);
+  text-shadow: 0 0 5px var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.MessageList {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.MessageInput {
+  display: flex;
+  padding: 1rem;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-primary);
+}
+
+.MessageInput input {
+  flex-grow: 1;
+  background-color: #000;
+  border: 1px solid var(--color-primary);
+  color: var(--color-text);
+  padding: 0.75rem;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.MessageInput input:focus {
+  outline: none;
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+.MessageInput button {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-display);
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: all 0.2s ease;
+}
+
+.MessageInput button:hover {
+  box-shadow: 0 0 15px var(--color-primary);
+}
+
+.Message {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  max-width: 80%;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.Message.user {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.Message.assistant {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+  border: 1px solid var(--color-accent);
+}
+
+.Message .author {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.MessageList {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
