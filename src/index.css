@@ -2,25 +2,120 @@
   --font-main: 'Roboto Mono', monospace;
   --font-display: 'Orbitron', sans-serif;
 
-  --color-bg: #0a0a0a;
-  --color-surface: #1a1a1a;
+  /* Typography scale (adjustable via settings) */
+  --font-scale: 1;
+  --font-size-base: calc(0.875rem * var(--font-scale));
+  --font-size-small: calc(0.75rem * var(--font-scale));
+  --font-size-large: calc(1.05rem * var(--font-scale));
+
+  /* Core palette — cyan/violet cyber-glass */
+  --color-bg: #060714;
+  --color-bg-deep: #030409;
+  --color-surface: #101226;
   --color-primary: #00f2ff;
   --color-accent: #ff00ff;
-  --color-text: #e6e6e6;
-  --color-text-muted: #888888;
+
+  /* Glass layers */
+  --glass-bg: rgba(16, 18, 38, 0.55);
+  --glass-bg-strong: rgba(16, 18, 38, 0.82);
+  --glass-border: rgba(120, 200, 255, 0.14);
+  --glass-border-hover: rgba(0, 242, 255, 0.45);
+  --glass-blur: blur(18px);
+
+  /* Derived colors */
+  --color-text: #e8f4ff;
+  --color-text-muted: #7d8db3;
+  --color-glow-primary: rgba(0, 242, 255, 0.35);
+  --color-glow-accent: rgba(255, 0, 255, 0.25);
+  --color-bubble-user: linear-gradient(135deg, rgba(0, 242, 255, 0.16), rgba(140, 90, 255, 0.16));
+  --color-bubble-assistant: rgba(255, 255, 255, 0.045);
+
+  /* Motion */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
 }
 
-body {
-  margin: 0;
-  font-family: var(--font-main);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+[data-theme='light'] {
+  --color-bg: #eef2fb;
+  --color-bg-deep: #dfe6f5;
+  --color-surface: #ffffff;
+  --color-primary: #0090b8;
+  --color-accent: #b400c8;
+
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-bg-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(30, 60, 120, 0.12);
+  --glass-border-hover: rgba(0, 144, 184, 0.4);
+
+  --color-text: #16233d;
+  --color-text-muted: #5b6a8a;
+  --color-glow-primary: rgba(0, 144, 184, 0.2);
+  --color-glow-accent: rgba(180, 0, 200, 0.12);
+  --color-bubble-user: linear-gradient(135deg, rgba(0, 144, 184, 0.12), rgba(180, 0, 200, 0.08));
+  --color-bubble-assistant: rgba(22, 35, 61, 0.05);
+}
+
+[data-font-scale='compact'] {
+  --font-scale: 0.875;
+}
+[data-font-scale='comfortable'] {
+  --font-scale: 1;
+}
+[data-font-scale='spacious'] {
+  --font-scale: 1.15;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  line-height: 1.55;
+  background-color: var(--color-bg-deep);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+::selection {
+  background: rgba(0, 242, 255, 0.28);
+}
+
+/* Scrollbars tuned to the glass aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 200, 255, 0.18);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 242, 255, 0.35);
 }
