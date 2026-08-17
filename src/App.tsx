@@ -7,6 +7,32 @@ interface Message {
   sender: 'user' | 'assistant';
 }
 
+// Lyzr API configuration
+const LYZR_API = {
+  url: 'https://agent-prod.studio.lyzr.ai/v3/inference/chat/',
+  apiKey: 'sk-default-oxJP2NVhizJeiowoZy4zGCzpjfX3TAEp',
+  userId: 'amtuk119@gmail.com',
+  agentId: '6a80a66a3cff96f7d1224f47',
+  sessionId: '6a80a66a3cff96f7d1224f47-x7uti9kx',
+};
+
+// Extract assistant text from an unknown Lyzr response shape
+function extractReply(data: unknown): string {
+  if (typeof data === 'string') return data;
+  if (data && typeof data === 'object') {
+    const record = data as Record<string, unknown>;
+    for (const key of ['response', 'message', 'output', 'answer', 'reply', 'text']) {
+      const value = record[key];
+      if (typeof value === 'string') return value;
+      if (value && typeof value === 'object') {
+        const nested = extractReply(value);
+        if (nested) return nested;
+      }
+    }
+  }
+  return '';
+}
+
 const Header = () => (
   <header className="Header">
     <h1>GenAI Mentor</h1>
@@ -85,12 +111,55 @@ function App() {
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
 
-    // MOCKED API RESPONSE
-    setTimeout(() => {
-      const assistantMessage: Message = { text: `This is a mocked response to: "${text}"`, sender: 'assistant' };
+    try {
+      const response = await fetch(LYZR_API.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': LYZR_API.apiKey,
+        },
+        body: JSON.stringify({
+          user_id: LYZR_API.userId,
+          agent_id: LYZR_API.agentId,
+          session_id: LYZR_API.sessionId,
+          message: text,
+        }),
+      });
+
+      const raw = await response.text();
+      let reply = '';
+      try {
+        const data = JSON.parse(raw);
+        if (data && typeof data === 'object' && typeof data.detail === 'string') {
+          throw new Error(data.detail);
+        }
+        reply = extractReply(data);
+      } catch (err) {
+        if (err instanceof SyntaxError) {
+          reply = raw;
+        } else {
+          throw err;
+        }
+      }
+
+      if (!reply && !response.ok) {
+        throw new Error(`GenAI Mentor returned an error (HTTP ${response.status}).`);
+      }
+
+      const assistantMessage: Message = {
+        text: reply || 'GenAI Mentor returned an empty response. Please try again.',
+        sender: 'assistant',
+      };
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (err) {
+      const errorMessage: Message = {
+        text: `GenAI Mentor encountered an issue: ${err instanceof Error ? err.message : 'Unknown error'}. Please try again.`,
+        sender: 'assistant',
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

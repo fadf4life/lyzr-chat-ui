@@ -2,7 +2,7 @@
   "name": "lyzr-chat-ui",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://<YOUR_GITHUB_USERNAME>.github.io/lyzr-chat-ui",
+  "homepage": "https://fadf4life.github.io/lyzr-chat-ui",
   "type": "module",
   "scripts": {
     "dev": "vite",
