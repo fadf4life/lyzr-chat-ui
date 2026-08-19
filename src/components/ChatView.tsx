@@ -21,11 +21,16 @@ function formatTime(timestamp: number): string {
 export function ChatView({ messages, isLoading, onSubmit }: ChatViewProps) {
   const [draft, setDraft] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    scrollAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    // Scroll inside the chat container only — scrollIntoView on an anchor
+    // can drag every scrollable ancestor (including the page) along with it.
+    const area = scrollAreaRef.current;
+    if (area) {
+      area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
+    }
   }, [messages, isLoading]);
 
   const send = () => {
@@ -58,7 +63,7 @@ export function ChatView({ messages, isLoading, onSubmit }: ChatViewProps) {
 
   return (
     <section className="ChatView">
-      <div className="ChatView__scroll">
+      <div className="ChatView__scroll" ref={scrollAreaRef}>
         {!hasMessages ? (
           <div className="ChatView__welcome">
             <div className="ChatView__welcomeOrb" aria-hidden="true">GM</div>
@@ -108,7 +113,6 @@ export function ChatView({ messages, isLoading, onSubmit }: ChatViewProps) {
             )}
           </div>
         )}
-        <div ref={scrollAnchorRef} />
       </div>
 
       <form

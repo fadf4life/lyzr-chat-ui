@@ -91,6 +91,10 @@ body {
   overflow: hidden;
 }
 
+.Panel {
+  min-height: 0;
+}
+
 button {
   font-family: inherit;
   cursor: pointer;
