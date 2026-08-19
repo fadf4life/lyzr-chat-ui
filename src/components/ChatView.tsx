@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Message } from '../types';
 
 interface ChatViewProps {
@@ -88,7 +90,13 @@ export function ChatView({ messages, isLoading, onSubmit }: ChatViewProps) {
             {messages.map((message) => (
               <article key={message.id} className={`Message Message--${message.sender}`}>
                 <div className="Message__body">
-                  <div className="Message__text">{message.text}</div>
+                  {message.sender === 'assistant' ? (
+                    <div className="Message__text Markdown">
+                      <Markdown remarkPlugins={[remarkGfm]}>{message.text}</Markdown>
+                    </div>
+                  ) : (
+                    <div className="Message__text">{message.text}</div>
+                  )}
                 </div>
                 <footer className="Message__footer">
                   <span className="Message__time">{formatTime(message.timestamp)}</span>
